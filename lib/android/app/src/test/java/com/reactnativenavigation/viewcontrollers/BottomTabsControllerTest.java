@@ -13,6 +13,7 @@ import com.reactnativenavigation.parse.Number;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.utils.ImageLoader;
 import com.reactnativenavigation.utils.OptionHelper;
+import com.reactnativenavigation.viewcontrollers.bottomtabs.BottomTabsController;
 import com.reactnativenavigation.views.BottomTabs;
 import com.reactnativenavigation.views.ReactComponent;
 
