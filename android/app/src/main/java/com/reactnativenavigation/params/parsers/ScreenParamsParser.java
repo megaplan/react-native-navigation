@@ -53,6 +53,7 @@ public class ScreenParamsParser extends Parser {
 
         result.fabParams = ButtonParser.parseFab(params, result.navigationParams.navigatorEventId, result.navigationParams.screenInstanceId);
 
+        result.isButton = getTabIsButton(params);
         result.tabLabel = getTabLabel(params);
         result.tabIcon = new TabIconParser(params).parse();
 
@@ -90,6 +91,14 @@ public class ScreenParamsParser extends Parser {
             tabLabel = params.getString("label");
         }
         return tabLabel;
+    }
+
+    private static boolean getTabIsButton(Bundle params) {
+        boolean isButton = false;
+        if (hasKey(params, "isButton")) {
+            isButton = params.getBoolean("isButton");
+        }
+        return isButton;
     }
 
     private static List<PageParams> parseTopTabs(Bundle params) {
