@@ -22,38 +22,49 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
-  id queue = [[RCCManager sharedInstance].getBridge uiManager].methodQueue;
-  dispatch_async(queue, ^{
-    [[[RCCManager sharedInstance].getBridge uiManager] configureNextLayoutAnimation:nil withCallback:^(NSArray* arr){} errorCallback:^(NSArray* arr){}];
-  });
-  
-  if (tabBarController.selectedIndex != [tabBarController.viewControllers indexOfObject:viewController]) {
-    NSDictionary *body = @{
-                           @"selectedTabIndex": @([tabBarController.viewControllers indexOfObject:viewController]),
-                           @"unselectedTabIndex": @(tabBarController.selectedIndex)
-                           };
-    [RCCTabBarController sendScreenTabChangedEvent:viewController body:body];
-    
-    [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:@"bottomTabSelected" body:body];
-    if ([viewController isKindOfClass:[UINavigationController class]]) {
-      UINavigationController *navigationController = (UINavigationController*)viewController;
-      UIViewController *topViewController = navigationController.topViewController;
-      
-      if ([topViewController isKindOfClass:[RCCViewController class]]) {
-        RCCViewController *topRCCViewController = (RCCViewController*)topViewController;
-        topRCCViewController.commandType = COMMAND_TYPE_BOTTOME_TAB_SELECTED;
-        topRCCViewController.timestamp = [RCTHelpers getTimestampString];
+
+  long index = [tabBarController.viewControllers indexOfObject:viewController];
+
+  if (!self.children[index][@"props"][@"isButton"]) {
+
+    id queue = [[RCCManager sharedInstance].getBridge uiManager].methodQueue;
+    dispatch_async(queue, ^{
+      [[[RCCManager sharedInstance].getBridge uiManager] configureNextLayoutAnimation:nil withCallback:^(NSArray* arr){} errorCallback:^(NSArray* arr){}];
+    });
+
+    if (tabBarController.selectedIndex != [tabBarController.viewControllers indexOfObject:viewController]) {
+      NSDictionary *body = @{
+                             @"selectedTabIndex": @([tabBarController.viewControllers indexOfObject:viewController]),
+                             @"unselectedTabIndex": @(tabBarController.selectedIndex)
+                             };
+      [RCCTabBarController sendScreenTabChangedEvent:viewController body:body];
+
+      [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:@"bottomTabSelected" body:body];
+      if ([viewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController *navigationController = (UINavigationController*)viewController;
+        UIViewController *topViewController = navigationController.topViewController;
+
+        if ([topViewController isKindOfClass:[RCCViewController class]]) {
+          RCCViewController *topRCCViewController = (RCCViewController*)topViewController;
+          topRCCViewController.commandType = COMMAND_TYPE_BOTTOME_TAB_SELECTED;
+          topRCCViewController.timestamp = [RCTHelpers getTimestampString];
+        }
       }
+
+    } else {
+      [RCCTabBarController sendScreenTabPressedEvent:viewController body:nil];
     }
-    
-  } else {
-    [RCCTabBarController sendScreenTabPressedEvent:viewController body:nil];
-  }
-  
-  
-  
+
   return YES;
+
+  } else {
+    NSDictionary *body = @{@"buttonTabIndex": @(index)};
+    [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:@"buttonTabClick" body:body];
+
+    return NO;
+  }
 }
+
 
 - (UIImage *)image:(UIImage*)image withColor:(UIColor *)color1
 {
@@ -77,6 +88,7 @@
   if (!self) return nil;
   
   self.delegate = self;
+  self.children = children;
   
   self.tabBar.translucent = YES; // default
   
