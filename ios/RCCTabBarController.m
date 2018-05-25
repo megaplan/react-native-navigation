@@ -23,9 +23,9 @@
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
 
-  long index = [tabBarController.viewControllers indexOfObject:viewController];
+    long index = [tabBarController.viewControllers indexOfObject:viewController];
 
-  if (!self.children[index][@"props"][@"isButton"]) {
+    if (!self.children[index][@"props"][@"isButton"]) {
 
     id queue = [[RCCManager sharedInstance].getBridge uiManager].methodQueue;
     dispatch_async(queue, ^{
@@ -59,12 +59,12 @@
 
     return YES;
 
-    } else {
-        NSDictionary *body = @{@"buttonTabIndex": @(index)};
-        [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:@"buttonTabClick" body:body];
+     } else {
+            NSDictionary *body = @{@"buttonTabIndex": @(index)};
+            [[[RCCManager sharedInstance] getBridge].eventDispatcher sendAppEventWithName:@"buttonTabClick" body:body];
 
-        return NO;
-      }
+            return NO;
+          }
 }
 
 - (UIImage *)image:(UIImage*)image withColor:(UIColor *)color1 {
