@@ -10,4 +10,9 @@ public class CompatUtils {
                && !act.isTaskRoot()
                && intent.hasCategory(Intent.CATEGORY_LAUNCHER);
     }
+    public static boolean isLinkOpenedOverNavigationActivity(final Activity act, final Intent intent) {
+        return intent != null && intent.getAction() != null
+                && intent.getAction().equals(Intent.ACTION_VIEW)
+                && !act.isTaskRoot();
+    }
 }
