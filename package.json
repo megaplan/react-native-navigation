@@ -5,9 +5,6 @@
   "license": "MIT",
   "nativePackage": true,
   "author": "Tal Kol <talkol@gmail.com>",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "bugs": {
     "url": "https://github.com/wix/react-native-navigation/issues"
   },
