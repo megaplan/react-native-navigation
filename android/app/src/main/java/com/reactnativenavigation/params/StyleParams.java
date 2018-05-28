@@ -137,7 +137,6 @@ public class StyleParams {
     public int topTabsHeight;
 
     public Color screenBackgroundColor;
-    public String rootBackgroundImageName;
 
     public boolean drawScreenAboveBottomTabs;
 
@@ -146,7 +145,6 @@ public class StyleParams {
     public int bottomTabsInitialIndex;
     public boolean bottomTabsHidden;
     public boolean bottomTabsHiddenOnScroll;
-    public boolean bottomTabsHideShadow;
     public Color bottomTabsColor;
     public Color selectedBottomTabsButtonColor;
     public Color bottomTabsButtonColor;

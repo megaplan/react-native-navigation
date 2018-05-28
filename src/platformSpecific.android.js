@@ -62,12 +62,12 @@ function dismissLightBox() {
   NativeReactModule.dismissLightBox();
 }
 
-async function dismissTopModal(params) {
-  return await NativeReactModule.dismissTopModal(params);
+function dismissTopModal(params) {
+  NativeReactModule.dismissTopModal(params);
 }
 
-async function dismissAllModals() {
-  return await NativeReactModule.dismissAllModals();
+function dismissAllModals() {
+  NativeReactModule.dismissAllModals();
 }
 
 function showInAppNotification(params) {
