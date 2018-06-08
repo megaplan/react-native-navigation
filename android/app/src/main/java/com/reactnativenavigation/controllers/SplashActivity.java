@@ -100,4 +100,3 @@ public abstract class SplashActivity extends AppCompatActivity {
         return view;
     }
 }
-
