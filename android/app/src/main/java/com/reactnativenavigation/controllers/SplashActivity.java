@@ -43,16 +43,14 @@ public abstract class SplashActivity extends AppCompatActivity {
         if (NavigationApplication.instance.getReactGateway().hasStartedCreatingContext()) {
             if (
                 CompatUtils.isSplashOpenedOverNavigationActivity(this, getIntent())
-                || CompatUtils.isLinkOpenedOverNavigationActivity(this, getIntent())
+                || CompatUtils.isLinkOpenedOverNavigationActivity(this, getIntent()) && NavigationActivity.currentActivity != null
             ) {
                 finish();
                 return;
             }
             NavigationApplication.instance.getEventEmitter().sendAppLaunchedEvent();
-            if (NavigationApplication.instance.clearHostOnActivityDestroy(this)) {
-                overridePendingTransition(0, 0);
-                finish();
-            }
+            overridePendingTransition(0, 0);
+            finish();
             return;
         }
 
@@ -102,3 +100,4 @@ public abstract class SplashActivity extends AppCompatActivity {
         return view;
     }
 }
+
