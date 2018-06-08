@@ -1,6 +1,6 @@
 {
   "name": "react-native-navigation",
-  "version": "1.1.314-megaplan.3",
+  "version": "1.1.314-megaplan.4",
   "description": "React Native Navigation - truly native navigation for iOS and Android",
   "license": "MIT",
   "nativePackage": true,
@@ -10,10 +10,6 @@
   },
   "homepage": "https://github.com/wix/react-native-navigation",
   "readme": "https://github.com/wix/react-native-navigation#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wix/react-native-navigation.git"
-  },
   "main": "src/index.js",
   "scripts": {
     "build": ":",
