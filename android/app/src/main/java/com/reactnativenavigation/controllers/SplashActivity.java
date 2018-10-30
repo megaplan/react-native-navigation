@@ -48,7 +48,7 @@ public abstract class SplashActivity extends AppCompatActivity {
                 finish();
                 return;
             }
-            NavigationApplication.instance.getEventEmitter().sendAppLaunchedEvent();
+            //NavigationApplication.instance.getEventEmitter().sendAppLaunchedEvent();
             overridePendingTransition(0, 0);
             finish();
             return;
