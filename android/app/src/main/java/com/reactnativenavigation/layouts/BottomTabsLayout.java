@@ -16,6 +16,8 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.reactnativenavigation.NavigationApplication;
+import com.reactnativenavigation.bridge.EventEmitter;
+import com.reactnativenavigation.bridge.NavigationReactEventEmitter;
 import com.reactnativenavigation.events.EventBus;
 import com.reactnativenavigation.events.ScreenChangedEvent;
 import com.reactnativenavigation.params.ActivityParams;
@@ -534,7 +536,14 @@ public class BottomTabsLayout extends BaseLayout implements AHBottomNavigation.O
     private void sendTabReselectedEventToJs() {
         WritableMap data = Arguments.createMap();
         String navigatorEventId = getCurrentScreenStack().peek().getNavigatorEventId();
-        NavigationApplication.instance.getEventEmitter().sendNavigatorEvent("bottomTabReselected", navigatorEventId, data);
+        try {
+            EventEmitter emitter = NavigationApplication.instance.getEventEmitter();
+            if (emitter != null) {
+                emitter.sendNavigatorEvent("bottomTabReselected", navigatorEventId, data);
+            }
+        } catch (Exception e) {
+            // noop
+        }
     }
 
     private void showNewStack(int position, NavigationType type) {
